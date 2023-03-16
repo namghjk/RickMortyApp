@@ -7,8 +7,8 @@
 
 import UIKit
 
+/// Controller to show Setting
 class RMSettingsViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
