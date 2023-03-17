@@ -15,4 +15,4 @@ class RMLocationViewController: UIViewController {
         title = "Location"
     }
 
-
+}
