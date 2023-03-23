@@ -19,8 +19,6 @@ final class RMRequest{
     /// Desird Endpoint
     let endpoint: RMEndpoint
     
-    
-    
     /// Path components in API
     let pathComponents: [String]
     
@@ -66,7 +64,7 @@ final class RMRequest{
     // MARK: - Public
     
     
-    /// <#Description#>
+    /// Construct Request
     /// - Parameters:
     ///   - endpoint: Expected Endponit
     ///   - pathComponents: Collection of PathComponents
@@ -81,3 +79,7 @@ final class RMRequest{
     }
 }
  
+
+extension RMRequest{
+    static let listCharacterRequests = RMRequest(endpoint: .character)
+}

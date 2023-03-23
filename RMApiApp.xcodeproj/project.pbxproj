@@ -17,6 +17,7 @@
 		DE6E75F929C428D4002B7186 /* RMSingleLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E75F829C428D4002B7186 /* RMSingleLocation.swift */; };
 		DE6E75FB29C4294E002B7186 /* RMStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E75FA29C4294E002B7186 /* RMStatus.swift */; };
 		DE6E75FD29C429BE002B7186 /* RMGender.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6E75FC29C429BE002B7186 /* RMGender.swift */; };
+		DE72AA2B29CC0C4800D155E5 /* RMGetALLCharacterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE72AA2A29CC0C4800D155E5 /* RMGetALLCharacterResponse.swift */; };
 		DEB030FE29C1F43A00A6EAD5 /* RMLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB030FD29C1F43A00A6EAD5 /* RMLocation.swift */; };
 		DEB0310029C1F44800A6EAD5 /* RMEpisode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB030FF29C1F44800A6EAD5 /* RMEpisode.swift */; };
 		DEB0310529C1F4A500A6EAD5 /* RMTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB0310429C1F4A500A6EAD5 /* RMTabBarController.swift */; };
@@ -39,6 +40,7 @@
 		DE6E75F829C428D4002B7186 /* RMSingleLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMSingleLocation.swift; sourceTree = "<group>"; };
 		DE6E75FA29C4294E002B7186 /* RMStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMStatus.swift; sourceTree = "<group>"; };
 		DE6E75FC29C429BE002B7186 /* RMGender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMGender.swift; sourceTree = "<group>"; };
+		DE72AA2A29CC0C4800D155E5 /* RMGetALLCharacterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMGetALLCharacterResponse.swift; sourceTree = "<group>"; };
 		DEB030FD29C1F43A00A6EAD5 /* RMLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMLocation.swift; sourceTree = "<group>"; };
 		DEB030FF29C1F44800A6EAD5 /* RMEpisode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMEpisode.swift; sourceTree = "<group>"; };
 		DEB0310429C1F4A500A6EAD5 /* RMTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RMTabBarController.swift; sourceTree = "<group>"; };
@@ -72,6 +74,28 @@
 				DE1D792929C1F3F900B7870F /* RMLocationViewController.swift */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		DE72AA2729CC0BF000D155E5 /* DataTypes */ = {
+			isa = PBXGroup;
+			children = (
+				DE1D792B29C1F41500B7870F /* RMCharacter.swift */,
+				DE6E75FA29C4294E002B7186 /* RMStatus.swift */,
+				DEB030FD29C1F43A00A6EAD5 /* RMLocation.swift */,
+				DE6E75FC29C429BE002B7186 /* RMGender.swift */,
+				DEB030FF29C1F44800A6EAD5 /* RMEpisode.swift */,
+				DE6E75F629C4286F002B7186 /* RMOrigin.swift */,
+				DE6E75F829C428D4002B7186 /* RMSingleLocation.swift */,
+			);
+			path = DataTypes;
+			sourceTree = "<group>";
+		};
+		DE72AA2929CC0C1B00D155E5 /* APIResponseType */ = {
+			isa = PBXGroup;
+			children = (
+				DE72AA2A29CC0C4800D155E5 /* RMGetALLCharacterResponse.swift */,
+			);
+			path = APIResponseType;
 			sourceTree = "<group>";
 		};
 		DEB0310229C1F49000A6EAD5 /* Others */ = {
@@ -152,13 +176,8 @@
 		DECF6AEE29C1ECD5000EFEEF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				DEB030FD29C1F43A00A6EAD5 /* RMLocation.swift */,
-				DE6E75FC29C429BE002B7186 /* RMGender.swift */,
-				DEB030FF29C1F44800A6EAD5 /* RMEpisode.swift */,
-				DE6E75F629C4286F002B7186 /* RMOrigin.swift */,
-				DE6E75F829C428D4002B7186 /* RMSingleLocation.swift */,
-				DE1D792B29C1F41500B7870F /* RMCharacter.swift */,
-				DE6E75FA29C4294E002B7186 /* RMStatus.swift */,
+				DE72AA2929CC0C1B00D155E5 /* APIResponseType */,
+				DE72AA2729CC0BF000D155E5 /* DataTypes */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -256,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE72AA2B29CC0C4800D155E5 /* RMGetALLCharacterResponse.swift in Sources */,
 				DE6E75F729C4286F002B7186 /* RMOrigin.swift in Sources */,
 				DE6E75F929C428D4002B7186 /* RMSingleLocation.swift in Sources */,
 				DEB0310529C1F4A500A6EAD5 /* RMTabBarController.swift in Sources */,
