@@ -7,8 +7,17 @@
 
 import UIKit
 
+protocol RMCharacterListViewDelegate: AnyObject{
+    func rmCharacterListView(
+        _ characterListView:RMCharacterListView,
+        didSelectCharacter character: RMCharacter
+    )
+}
+
 //View shows list of Characters,loader,etc..
 final class RMCharacterListView: UIView {
+    
+    public weak var delegate: RMCharacterListViewDelegate?
     
     private let viewModel = RMCharacterListViewModel()
     
@@ -22,7 +31,7 @@ final class RMCharacterListView: UIView {
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.isHidden = true
         collectionView.alpha = 0
@@ -41,6 +50,7 @@ final class RMCharacterListView: UIView {
         addSubview(collectionView,spinner)
         addConstraints()
         spinner.startAnimating()
+        viewModel.delegate = self
         viewModel.fetchCharacter()
         setUpCollectionView()
     }
@@ -68,17 +78,23 @@ final class RMCharacterListView: UIView {
         collectionView.dataSource = viewModel
         collectionView.delegate = viewModel
         
-        DispatchQueue.main.asyncAfter(deadline: .now()+2, execute: {
-            self.spinner.stopAnimating()
-            
-           
-            self.collectionView.isHidden = false
-            
-            UIView.animate(withDuration: 0.4){
-                self.collectionView.alpha = 1
-            }
-            
-            
-        })
+    }
+}
+
+
+extension RMCharacterListView: RMCharacterListViewModelDelegate{
+    
+    func didSelectCharacter(_ characrer: RMCharacter) {
+        delegate?.rmCharacterListView(self, didSelectCharacter: characrer)
+        print("2")
+    }
+    
+    func didLoadInitialCharacters() {
+        spinner.stopAnimating()
+        collectionView.isHidden = false
+        collectionView.reloadData() //Initial fetch
+        UIView.animate(withDuration: 0.4){
+            self.collectionView.alpha = 1
+        }
     }
 }
