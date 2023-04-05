@@ -27,7 +27,7 @@ final class RMCharacterListView: UIView {
         spinner.translatesAutoresizingMaskIntoConstraints = false
         return spinner
     } ()
-   
+    
     private let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -38,8 +38,11 @@ final class RMCharacterListView: UIView {
         collectionView.translatesAutoresizingMaskIntoConstraints  = false
         collectionView.register(RMCharacterCollectionViewCell.self,
                                 forCellWithReuseIdentifier: RMCharacterCollectionViewCell.cellIndetifier)
+        collectionView.register(RMLoadingFooterCollectionReusableView.self,
+                                forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
+                                withReuseIdentifier: RMLoadingFooterCollectionReusableView.identifier)
         return collectionView
-
+        
     }()
     
     //MARK: - Init
@@ -86,7 +89,12 @@ extension RMCharacterListView: RMCharacterListViewModelDelegate{
     
     func didSelectCharacter(_ characrer: RMCharacter) {
         delegate?.rmCharacterListView(self, didSelectCharacter: characrer)
-        print("2")
+    }
+    
+    func didLoadMoreCharacter(with newIndexPath: [IndexPath]) {
+        collectionView.performBatchUpdates {
+            self.collectionView.insertItems(at: newIndexPath)
+        }
     }
     
     func didLoadInitialCharacters() {

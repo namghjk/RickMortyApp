@@ -11,7 +11,7 @@ import UIKit
 /// Controller to show and search Character
 class RMCharacterViewController: UIViewController,RMCharacterListViewDelegate {
     
-   private let characterListView = RMCharacterListView()
+    private let characterListView = RMCharacterListView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,6 @@ class RMCharacterViewController: UIViewController,RMCharacterListViewDelegate {
     // MARK: -RMCharacter;istViewDelegate
     
     func rmCharacterListView(_ characterListView: RMCharacterListView, didSelectCharacter character: RMCharacter) {
-        print("3")
         //Open detail controller for that character
         let viewModel = RMDetailCharacterViewModel(character: character)
         let detailVC = RMDetailCharacterViewController(viewModel: viewModel)
