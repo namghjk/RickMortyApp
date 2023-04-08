@@ -9,7 +9,10 @@ import UIKit
 
 class RMDetailCharacterViewController: UIViewController {
     private let viewModel: RMDetailCharacterViewModel
-
+    
+    private let detailView = RMDetailCharacterView()
+    
+    
     
     init(viewModel: RMDetailCharacterViewModel) {
         self.viewModel = viewModel
@@ -20,14 +23,34 @@ class RMDetailCharacterViewController: UIViewController {
         fatalError("Unsupported")
     }
     
+    //MARK: -Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .secondarySystemBackground
+        view.backgroundColor = .systemBackground
         title = viewModel.title
-
-        
+        view.addSubview(detailView)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .action,
+            target: self,
+            action: #selector(didTapShare)
+        )
+        addConstraint()
     }
     
-
-
+    @objc
+    private func didTapShare(){
+        //Share character info
+    }
+    
+    private func addConstraint(){
+        NSLayoutConstraint.activate([
+            detailView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            detailView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            detailView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            detailView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
+    
+    
+    
 }

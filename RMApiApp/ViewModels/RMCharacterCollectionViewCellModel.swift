@@ -8,7 +8,7 @@
 import Foundation
 
 
-final class RMCharacterCollectionViewCellModel:Hashable {
+final class RMCharacterCollectionViewCellModel:Hashable,Equatable {
     public let characterName: String
     private let characterStatus:RMStatus
     private let characterImageURL:URL?
@@ -27,28 +27,25 @@ final class RMCharacterCollectionViewCellModel:Hashable {
         return "Status: \(characterStatus.text)"
     }
     
-    public func fetchImage(completion:@escaping (Result<Data, Error>) -> Void){
-        
-        //TODO: Abstract to Imgage Manager
-        guard let url = characterImageURL else {
-            completion(.failure(URLError(.badURL)))
-            return
-        }
-        
-        let request = URLRequest(url: url)
-        RMImageLoaderManager.shared.downLoadImage(url, completion: completion)
-    }
-    //MARK: - Hashable
-    
-    static func == (lhs: RMCharacterCollectionViewCellModel, rhs: RMCharacterCollectionViewCellModel) -> Bool {
-        return lhs.hashValue == rhs.hashValue
-    }
-    
+    public func fetchImage(completion: @escaping (Result<Data, Error>) -> Void) {
+           // TODO: Abstract to Image Manager
+           guard let url = characterImageURL else {
+               completion(.failure(URLError(.badURL)))
+               return
+           }
+           RMImageLoaderManager.shared.downLoadImage(url, completion: completion)
+       }
 
-    func hash (into hasher: inout Hasher){
-        hasher.combine(characterName)
-        hasher.combine(characterStatus)
-        hasher.combine(characterImageURL)
-    }
-    
-}
+       // MARK: - Hashable
+
+       static func == (lhs: RMCharacterCollectionViewCellModel, rhs: RMCharacterCollectionViewCellModel) -> Bool {
+           return lhs.hashValue == rhs.hashValue
+       }
+
+       func hash(into hasher: inout Hasher) {
+           hasher.combine(characterName)
+           hasher.combine(characterStatus)
+           hasher.combine(characterImageURL)
+       }
+   }
+

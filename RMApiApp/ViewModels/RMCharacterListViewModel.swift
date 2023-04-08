@@ -78,7 +78,6 @@ final class RMCharacterListViewModel: NSObject {
             }
             switch result {
             case .success(let responseModel):
-                print("Pre:\(strongSelf.cellViewModels.count)")
                 let moreResults = responseModel.results
                 let info = responseModel.info
                 strongSelf.apiInfo = info
@@ -103,7 +102,6 @@ final class RMCharacterListViewModel: NSObject {
 
                 
             case .failure(let failure):
-                print(String(describing: failure))
                 self?.isLoadingMoreCharacters = false
             }
         }
@@ -185,7 +183,7 @@ extension RMCharacterListViewModel: UICollectionViewDataSource,UICollectionViewD
 
 
 // MARK: -ScrollView
-extension RMCharacterListViewModel: UIScrollViewDelegate{
+extension RMCharacterListViewModel: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         guard shouldShowLoadMoreIndicator,
               !isLoadingMoreCharacters,
@@ -194,17 +192,15 @@ extension RMCharacterListViewModel: UIScrollViewDelegate{
               let url = URL(string: nextUrlString) else {
             return
         }
-        
         Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { [weak self] t in
-            let offSet = scrollView.contentOffset.y
+            let offset = scrollView.contentOffset.y
             let totalContentHeight = scrollView.contentSize.height
             let totalScrollViewFixedHeight = scrollView.frame.size.height
-            
-            if offSet >= (totalContentHeight - totalScrollViewFixedHeight - 120){
+
+            if offset >= (totalContentHeight - totalScrollViewFixedHeight - 120) {
                 self?.fetchAddditionalCharacters(url: url)
             }
             t.invalidate()
         }
     }
 }
-
