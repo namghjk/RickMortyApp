@@ -10,7 +10,9 @@ import UIKit
 //View for single character info
 final class RMDetailCharacterView: UIView{
     
-    private var collectionView: UICollectionView?
+    public var collectionView: UICollectionView?
+    
+    private let viewModel: RMDetailCharacterViewModel
     
     private let spinner: UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .large)
@@ -21,10 +23,11 @@ final class RMDetailCharacterView: UIView{
     
     //MARK: - Init
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, viewModel: RMDetailCharacterViewModel) {
+        self.viewModel = viewModel
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .purple
+        backgroundColor = .blue
         
         let collectionView = createCollectionView()
         self.collectionView = collectionView
@@ -60,29 +63,65 @@ final class RMDetailCharacterView: UIView{
             return self.createSection(for: sectionIndex)
         }
         let collectionView = UICollectionView(frame: .zero,collectionViewLayout: layout)
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier:"cell")
+        collectionView.register(UICollectionViewCell.self,
+                                forCellWithReuseIdentifier:"cell")
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }
     
     private func createSection(for sectionIndex: Int) -> NSCollectionLayoutSection{
+        let sectionType = viewModel.sections
         
+        switch sectionType[sectionIndex] {
+        case .photo:
+            return createPhotoSectionLayout()
+        case .information:
+            return createInformationSectionLayout()
+        case .episodes:
+            return createEpisodesSectionLayout()
+        }
     }
     
-    
-    //
-    //    public func fecthCharacterData(){
-    //        print(requestUrl)
-    //        guard let url = requestUrl,
-    //              let request = RMRequest(url: url) else {
-    //            print("Failed to create")
-    //            return
-    //        }
-    //        RMService.shared.excute(request, expecting: RMCharacter.self) { result in
-    //            switch result {
-    //            case .success(let success):
-    //                print(String(describing: success))
-    //            case .failure(let failure):
-    //                print(String(describing: failure))
-    //            }
-    //        }
+    private func createPhotoSectionLayout() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .fractionalHeight(1.0)))
+        
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0,
+                                                        leading: 0,
+                                                        bottom: 10,
+                                                        trailing: 0)
+        
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .absolute(150)),subitems: [item]
+        )
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
+    }
+    private func createInformationSectionLayout() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .fractionalHeight(1.0)))
+        
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0,
+                                                        leading: 0,
+                                                        bottom: 10,
+                                                        trailing: 0)
+        
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .absolute(150)),subitems: [item]
+        )
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
+    }
+    private func createEpisodesSectionLayout() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .fractionalHeight(1.0)))
+        
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0,
+                                                        leading: 0,
+                                                        bottom: 10,
+                                                        trailing: 0)
+        
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),heightDimension: .absolute(150)),subitems: [item]
+        )
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
+    }
 }
