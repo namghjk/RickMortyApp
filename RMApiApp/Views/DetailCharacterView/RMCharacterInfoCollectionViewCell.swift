@@ -25,7 +25,7 @@ class RMCharacterInfoCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
     }
     
-    private func configure(viewModel: RMCharacterInfoCollectionViewCellVM ){
+    public func configure(with viewModel: RMCharacterInfoCollectionViewCellVM ){
         
     }
 }

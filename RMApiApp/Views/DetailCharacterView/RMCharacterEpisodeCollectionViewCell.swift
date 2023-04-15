@@ -26,7 +26,7 @@ class RMCharacterEpisodeCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
     }
     
-    private func configure(viewModel: RMCharacterEpisodeCollectionViewCellVM ){
+    public func configure(with viewModel: RMCharacterEpisodeCollectionViewCellVM ){
         
     }
-}`
+}
