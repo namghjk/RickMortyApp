@@ -87,12 +87,14 @@ extension RMDetailCharacterViewController: UICollectionViewDelegate,UICollection
             }
             cell.configure(with: ViewModel)
             return cell
+            
         case .information(let viewModels):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterInfoCollectionViewCell.cellIndentifier, for: indexPath) as? RMCharacterInfoCollectionViewCell else {
                 fatalError()
             }
             cell.configure(with: viewModels[indexPath.row])
             return cell
+            
         case .episodes(let viewModels):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RMCharacterEpisodeCollectionViewCell.cellIndentifier, for: indexPath) as? RMCharacterEpisodeCollectionViewCell else {
                 fatalError()
