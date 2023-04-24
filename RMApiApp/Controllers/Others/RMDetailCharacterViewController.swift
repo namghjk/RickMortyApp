@@ -30,6 +30,7 @@ class RMDetailCharacterViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         title = viewModel.title
+        print(viewModel.episodes)
         view.addSubview(detailView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .action,
@@ -101,6 +102,20 @@ extension RMDetailCharacterViewController: UICollectionViewDelegate,UICollection
             }
             cell.configure(with: viewModels[indexPath.row])
             return cell
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let sectionType = viewModel.sections[indexPath.section]
+        switch sectionType {
+        case .photo,.information:
+           break
+        case .episodes:
+            let episodes = self.viewModel.episodes
+            let selection = episodes[indexPath.row]
+            let vc = RMDetailEpisodeViewController(url: URL(string: selection))
+            navigationController?.pushViewController(vc, animated: true)
+            
         }
     }
 }

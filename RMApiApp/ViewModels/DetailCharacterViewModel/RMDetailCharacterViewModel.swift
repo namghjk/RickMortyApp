@@ -8,7 +8,11 @@
 import UIKit
 
 final class RMDetailCharacterViewModel{
-    public let character: RMCharacter
+    private let character: RMCharacter
+    
+    public var episodes: [String] {
+        character.episode
+    }
     
     enum sectionType {
         case photo(viewmodel: RMCharacterPhotoCollectionViewCellVM)
