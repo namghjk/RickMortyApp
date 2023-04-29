@@ -30,7 +30,6 @@ class RMDetailCharacterViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         title = viewModel.title
-        print(viewModel.episodes)
         view.addSubview(detailView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .action,
