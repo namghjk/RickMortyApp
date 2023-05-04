@@ -37,7 +37,7 @@ final class RMCharacterListView: UIView {
         collectionView.alpha = 0
         collectionView.translatesAutoresizingMaskIntoConstraints  = false
         collectionView.register(RMCharacterCollectionViewCell.self,
-                                forCellWithReuseIdentifier: RMCharacterCollectionViewCell.cellIndetifier)
+                                forCellWithReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier)
         collectionView.register(RMLoadingFooterCollectionReusableView.self,
                                 forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter,
                                 withReuseIdentifier: RMLoadingFooterCollectionReusableView.identifier)
@@ -63,6 +63,7 @@ final class RMCharacterListView: UIView {
     }
     
     private  func addConstraints() {
+        
         NSLayoutConstraint.activate([
             spinner.widthAnchor.constraint(equalToConstant: 100),
             spinner.heightAnchor.constraint(equalToConstant: 100),
