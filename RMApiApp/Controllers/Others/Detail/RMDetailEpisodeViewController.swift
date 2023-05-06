@@ -9,7 +9,7 @@ import UIKit
 
 
 /// This view show detail about single episode when customer click
-class RMDetailEpisodeViewController: UIViewController, RMDetailEpisodeViewVMDelegate {
+class RMDetailEpisodeViewController: UIViewController, RMDetailEpisodeViewVMDelegate,RMDetailEpisodeViewDelegate {
     
     private let viewModel: RMDetailEpisodeViewVM
     
@@ -31,9 +31,10 @@ class RMDetailEpisodeViewController: UIViewController, RMDetailEpisodeViewVMDele
         super.viewDidLoad()
         title = "Episode"
         view.addSubview(detailView)
-        viewModel.delegate = self
+        detailView.delegate = self
         addConstraint()
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))
+        viewModel.delegate = self
         viewModel.fetchEpisodeData()
          
     }
@@ -56,5 +57,13 @@ class RMDetailEpisodeViewController: UIViewController, RMDetailEpisodeViewVMDele
     func didFetchEpisodeDetails() {
         detailView.configure(with: viewModel)
     }
+    
+    func rmdetailEpisodeView(_ detailEpisodeView: RMDetailEpisodeView, didSelect character: RMCharacter) {
+        let vc = RMDetailCharacterViewController(viewModel: .init(character: character))
+        navigationController?.pushViewController(vc, animated: true
+        )
+    }
+    
+    
     
 }
