@@ -43,7 +43,7 @@ final class RMDetailEpisodeView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = .systemBackground
+        backgroundColor = .secondarySystemBackground
         let collectionView = createCollectionView()
         self.collectionView = collectionView
         addSubview(collectionView,spinner)

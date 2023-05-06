@@ -33,6 +33,7 @@ class RMDetailEpisodeViewController: UIViewController, RMDetailEpisodeViewVMDele
         view.addSubview(detailView)
         detailView.delegate = self
         addConstraint()
+        view.backgroundColor = .systemBackground
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))
         viewModel.delegate = self
         viewModel.fetchEpisodeData()
