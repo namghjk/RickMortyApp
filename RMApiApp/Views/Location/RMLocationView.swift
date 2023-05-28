@@ -7,8 +7,14 @@
 
 import UIKit
 
-class RMLocationView: UIView {
+protocol RMLocationViewDelegate: AnyObject {
+    func rmLocationViewDelegate(_ locationView: RMLocationView, didSelect: RMLocation )
+}
 
+class RMLocationView: UIView {
+    
+    weak var delegate: RMLocationViewDelegate?
+    
     private var viewModel: RMLocationViewVM? {
         didSet{
             spinner.stopAnimating()
@@ -25,12 +31,12 @@ class RMLocationView: UIView {
         table.translatesAutoresizingMaskIntoConstraints = false
         table.alpha = 0
         table.isHidden = true
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.register(RMLocationTableViewCell.self, forCellReuseIdentifier: RMLocationTableViewCell.cellIdentifier)
         return table
     }()
     
     private let spinner: UIActivityIndicatorView = {
-       let spinner = UIActivityIndicatorView()
+        let spinner = UIActivityIndicatorView()
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.hidesWhenStopped = true
         return spinner
@@ -45,10 +51,16 @@ class RMLocationView: UIView {
         addSubview(tableView,spinner)
         spinner.startAnimating()
         addConsraint()
+        configureTable()
     }
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
+    }
+    
+    private func configureTable(){
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     private func addConsraint() {
@@ -64,9 +76,38 @@ class RMLocationView: UIView {
             spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
     }
-
+    
     public func configure(with viewModel: RMLocationViewVM){
-        
+        self.viewModel = viewModel
     }
     
+}
+
+extension RMLocationView: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let locationModel = viewModel?.location(at: indexPath.row) else {
+            return
+        }
+        delegate?.rmLocationViewDelegate(self, didSelect: locationModel)
+        
+    }
+}
+
+extension RMLocationView: UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return viewModel?.cellViewModels.count ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cellViewModels = viewModel?.cellViewModels else {
+            fatalError()
+        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: RMLocationTableViewCell.cellIdentifier, for: indexPath) as? RMLocationTableViewCell else {
+            fatalError()
+        }
+        let cellViewModel = cellViewModels[indexPath.row]
+        cell.configure(with: cellViewModel)
+        return cell
+    }
 }
