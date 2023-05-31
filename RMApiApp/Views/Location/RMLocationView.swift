@@ -8,7 +8,7 @@
 import UIKit
 
 protocol RMLocationViewDelegate: AnyObject {
-    func rmLocationViewDelegate(_ locationView: RMLocationView, didSelect: RMLocation )
+    func rmLocationViewDelegate(_ locationView: RMLocationView, didSelect location: RMLocation )
 }
 
 class RMLocationView: UIView {

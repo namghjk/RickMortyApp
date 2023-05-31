@@ -1,32 +1,34 @@
 //
-//  RMDetailEpisodeViewVM.swift
+//  RMDetailLocationViewVM.swift
 //  RMApiApp
 //
-//  Created by Nam Pham on 26/04/2023.
+//  Created by Nam Pham on 31/05/2023.
 //
+
+
 
 import Foundation
 
-protocol RMDetailEpisodeViewVMDelegate: AnyObject{
-    func didFetchEpisodeDetails()
+protocol RMDetailLocationViewVMDelegate: AnyObject{
+    func didFetchLocationDetails()
 }
 
-final class RMDetailEpisodeViewVM {
+final class RMDetailLocationViewVM {
     private let endPointUrl: URL?
-    private var dataTuple: (episode: RMEpisode, characters: [RMCharacter])? {
+    private var dataTuple: (location: RMLocation, characters: [RMCharacter])? {
         didSet{
             createCellViewModels()
-            delegate?.didFetchEpisodeDetails()
+            delegate?.didFetchLocationDetails()
         }
     }
     
     enum sectionType{
-        case information(viewModel: [RMEpisodeInfoCollectionViewCellVM])
+        case information(viewModel: [RMLocationInfoCollectionViewCellVM])
         case characters(viewModel: [RMCharacterCollectionViewCellModel])
         
     }
     
-    public weak var delegate: RMDetailEpisodeViewVMDelegate?
+    public weak var delegate: RMDetailLocationViewVMDelegate?
     
     public private(set) var cellViewModels: [sectionType] = []
     
@@ -54,19 +56,19 @@ final class RMDetailEpisodeViewVM {
         }
         
         
-        let episode = dataTuple.episode
+        let location = dataTuple.location
         let character = dataTuple.characters
         
-        var createdString = episode.created
-        if let createdDate = RMCharacterInfoCollectionViewCellVM.dateFormatter.date(from: episode.created){
+        var createdString = location.created
+        if let createdDate = RMCharacterInfoCollectionViewCellVM.dateFormatter.date(from: location.created){
             createdString = RMCharacterInfoCollectionViewCellVM.shortDateFormatter.string(from: createdDate )
         }
         
         cellViewModels = [
             .information(viewModel: [
-                .init(title: "Episode Name", value: episode.name),
-                .init(title: "Air Date", value: episode.air_date),
-                .init(title: "Episode", value: episode.episode),
+                .init(title: "Location Name", value: location.name),
+                .init(title: "Dimension", value: location.dimension),
+                .init(title: "Episode", value: location.type),
                 .init(title: "Created", value: createdString)
             ]),
             .characters(viewModel: character.compactMap({ character in
@@ -86,18 +88,18 @@ final class RMDetailEpisodeViewVM {
             return
         }
         
-        RMService.shared.excute(request, expecting: RMEpisode.self) {  [weak self] result in
+        RMService.shared.excute(request, expecting: RMLocation.self) {  [weak self] result in
             switch result {
             case .success(let model):
-                self?.fetchRelatedCharacters(episode: model)
+                self?.fetchRelatedCharacters(location: model)
             case .failure:
                 break
             }
         }
     }
     
-    private func fetchRelatedCharacters(episode: RMEpisode){
-        let characterURLs = episode.characters.compactMap({
+    private func fetchRelatedCharacters(location: RMLocation){
+        let characterURLs = location.residents.compactMap({
             return URL(string: $0)
         })
         let requests: [RMRequest] = characterURLs.compactMap({
@@ -122,7 +124,7 @@ final class RMDetailEpisodeViewVM {
         }
         group.notify(queue: .main){
             self.dataTuple = (
-                episode: episode,
+                location: location,
                 characters: characters
             )
         }

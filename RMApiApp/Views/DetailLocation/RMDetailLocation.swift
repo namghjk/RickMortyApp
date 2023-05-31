@@ -1,24 +1,24 @@
 //
-//  RMDetailEpisodeView.swift
+//  RMDetailLocation.swift
 //  RMApiApp
 //
-//  Created by Nam Pham on 26/04/2023.
+//  Created by Nam Pham on 31/05/2023.
 //
 
 import UIKit
 
-protocol RMDetailEpisodeViewDelegate: AnyObject{
-    func rmdetailEpisodeView(
-        _ detailEpisodeView:RMDetailEpisodeView ,
+protocol RMDetailLocationViewDelegate: AnyObject{
+    func rmdetailLocationView(
+        _ detailLocationView:RMDetailLocationView ,
         didSelect character: RMCharacter
     )
 }
 
-final class RMDetailEpisodeView: UIView {
+final class RMDetailLocationView: UIView {
     
-    public weak var delegate : RMDetailEpisodeViewDelegate?
+    public weak var delegate : RMDetailLocationViewDelegate?
     
-    private var viewModel: RMDetailEpisodeViewVM? {
+    private var viewModel: RMDetailLocationViewVM? {
         didSet{
             spinner.stopAnimating()
             self.collectionView?.reloadData()
@@ -83,8 +83,8 @@ final class RMDetailEpisodeView: UIView {
         collectionView.alpha = 0
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(RMEpisodeInfoCollectionViewCell.self,
-                                forCellWithReuseIdentifier: RMEpisodeInfoCollectionViewCell.cellIdentifier)
+        collectionView.register(RMLocationInfoCollectionViewCell.self,
+                                forCellWithReuseIdentifier: RMLocationInfoCollectionViewCell.cellIdentifier)
         collectionView.register(RMCharacterCollectionViewCell.self,
                                 forCellWithReuseIdentifier: RMCharacterCollectionViewCell.cellIdentifier)
         return collectionView
@@ -92,12 +92,12 @@ final class RMDetailEpisodeView: UIView {
     
     
     //MARK: -public
-    public func configure(with viewModel: RMDetailEpisodeViewVM){
+    public func configure(with viewModel: RMDetailLocationViewVM){
         self.viewModel = viewModel
     }
 }
 
-extension RMDetailEpisodeView: UICollectionViewDelegate, UICollectionViewDataSource {
+extension RMDetailLocationView: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return viewModel?.cellViewModels.count ?? 0
@@ -127,8 +127,8 @@ extension RMDetailEpisodeView: UICollectionViewDelegate, UICollectionViewDataSou
         switch sectionType {
         case .information(let viewModels):
             let cellViewModel = viewModels[indexPath.row]
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:RMEpisodeInfoCollectionViewCell.cellIdentifier,for: indexPath
-            ) as? RMEpisodeInfoCollectionViewCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:RMLocationInfoCollectionViewCell.cellIdentifier,for: indexPath
+            ) as? RMLocationInfoCollectionViewCell else {
                 fatalError()
             }
             cell.configure(with: cellViewModel)
@@ -153,15 +153,15 @@ extension RMDetailEpisodeView: UICollectionViewDelegate, UICollectionViewDataSou
         }
         let sections = viewModel.cellViewModels
         let sectionType = sections[indexPath.section]
-        
+    
         switch sectionType {
         case .information:
             break
         case .characters:
             guard let character = viewModel.character(at:indexPath.row) else {
-                return 
+                return
             }
-            delegate?.rmdetailEpisodeView(self, didSelect: character)
+            delegate?.rmdetailLocationView(self, didSelect: character)
             
         }
     }
@@ -169,7 +169,7 @@ extension RMDetailEpisodeView: UICollectionViewDelegate, UICollectionViewDataSou
 }
 
 
-extension RMDetailEpisodeView {
+extension RMDetailLocationView {
     private func layout(for section: Int) -> NSCollectionLayoutSection{
         guard let sections = viewModel?.cellViewModels else{
             return createInfoLayout()
