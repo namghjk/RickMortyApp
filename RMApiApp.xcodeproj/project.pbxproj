@@ -236,8 +236,8 @@
 		DE96CF332A0AEE64000DC1DC /* Location */ = {
 			isa = PBXGroup;
 			children = (
-				DEFB71A02A1DDE60006CEE37 /* RMLocationTableViewCellVM.swift */,
 				DE96CF342A0AEE72000DC1DC /* RMLocationViewVM.swift */,
+				DEFB71A02A1DDE60006CEE37 /* RMLocationTableViewCellVM.swift */,
 			);
 			path = Location;
 			sourceTree = "<group>";

@@ -26,14 +26,13 @@ class RMDetailLocationViewController: UIViewController, RMDetailLocationViewVMDe
     init(location: RMLocation){
         let url = URL(string: location.url)
         self.viewModel = RMDetailLocationViewVM(endPointUrl: url)
-        print(location.url)
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported")
     }
-
+    
     //MARK: -Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +44,7 @@ class RMDetailLocationViewController: UIViewController, RMDetailLocationViewVMDe
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(didTapShare))
         viewModel.delegate = self
         viewModel.fetchEpisodeData()
-         
+        
     }
     
     private func addConstraint(){
@@ -56,12 +55,12 @@ class RMDetailLocationViewController: UIViewController, RMDetailLocationViewVMDe
             detailView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
-
+    
     @objc
     private func didTapShare(){
         
     }
- 
+    
     //MARK: - Delegate
     func didFetchLocationDetails() {
         detailView.configure(with: viewModel)
