@@ -9,12 +9,13 @@ import UIKit
 
 /// Config controller to Search
 final class RMSearchViewController: UIViewController {
-
+    
+    /// Configuration for search session
     struct Config {
         enum `Type` {
-            case character
-            case episode
-            case location
+            case character //name|status|gender
+            case episode // name|episode code
+            case location // name|type|dimension
         }
         let type: `Type`
     }
@@ -33,7 +34,7 @@ final class RMSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Search"
-        view.backgroundColor = .systemCyan
+        view.backgroundColor = .systemBackground
     }
     
 
